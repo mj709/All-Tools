@@ -1,0 +1,3079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-in-One Toolkit</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --danger: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --modal-bg: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        [data-theme="dark"] {
+            --primary: #4895ef;
+            --secondary: #4361ee;
+            --accent: #4cc9f0;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --danger: #e63946;
+            --light: #212529;
+            --dark: #f8f9fa;
+            --gray: #adb5bd;
+            --border: #495057;
+            --card-bg: #121212;
+            --modal-bg: #1e1e1e;
+            --text-primary: #f8f9fa;
+            --text-secondary: #adb5bd;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--light);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+        .header {
+            background: var(--card-bg);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .app-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            flex: 1;
+        }
+        .search-container {
+            position: relative;
+            flex: 2;
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        .fav-btn {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+        .category-chips {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+        }
+        .category-chip {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            background: var(--light);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+        .category-chip.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .tool-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        .tool-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+            color: white;
+            font-size: 1.25rem;
+        }
+        .tool-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+        .tool-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        .tool-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .open-btn {
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .open-btn:hover {
+            background: var(--secondary);
+        }
+        .fav-star {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+        .fav-star.active {
+            color: #ffc107;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.75rem 0;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.75rem;
+            transition: var(--transition);
+        }
+        .nav-item.active {
+            color: var(--primary);
+        }
+        .nav-icon {
+            font-size: 1.25rem;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: flex-end;
+            z-index: 1000;
+        }
+        .modal {
+            background: var(--modal-bg);
+            border-radius: var(--radius) var(--radius) 0 0;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        .modal-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        .modal-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        .modal-actions {
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.5rem;
+        }
+        .modal-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .modal-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+        .modal-btn.secondary {
+            background: var(--light);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 2000;
+        }
+        .toast.show {
+            transform: translateX(0);
+        }
+        .toast.success {
+            background: var(--success);
+        }
+        .toast.error {
+            background: var(--danger);
+        }
+        .toast.warning {
+            background: var(--warning);
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none !important;
+        }
+        .mt-1 {
+            margin-top: 0.25rem;
+        }
+        .mb-1 {
+            margin-bottom: 0.25rem;
+        }
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+        .mb-3 {
+            margin-bottom: 1rem;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-primary {
+            color: var(--primary);
+        }
+        .text-danger {
+            color: var(--danger);
+        }
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+        .d-flex {
+            display: flex;
+        }
+        .justify-between {
+            justify-content: space-between;
+        }
+        .align-center {
+            align-items: center;
+        }
+        .gap-1 {
+            gap: 0.25rem;
+        }
+        .gap-2 {
+            gap: 0.5rem;
+        }
+        .w-full {
+            width: 100%;
+        }
+        .settings-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+        .settings-label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        .settings-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        .result-container {
+            background: var(--light);
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+        }
+        .result-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .result-content {
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .drop-zone {
+            border: 2px dashed var(--border);
+            border-radius: 6px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .drop-zone:hover {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
+        }
+        .drop-zone.active {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.1);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .help-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        .help-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .help-link:hover {
+            text-decoration: underline;
+        }
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            display: inline-block;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .file-input-label {
+            display: block;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .file-input-label:hover {
+            background: var(--secondary);
+        }
+        .file-input {
+            display: none;
+        }
+        .qr-code-container {
+            text-align: center;
+            margin: 1rem 0;
+        }
+        .qr-code {
+            max-width: 200px;
+            height: auto;
+            margin: 0 auto;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 1rem;
+        }
+        .calendar-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 5px;
+        }
+        .calendar-day {
+            text-align: center;
+            padding: 10px 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .calendar-day:hover {
+            background: var(--light);
+        }
+        .calendar-day.today {
+            background: var(--primary);
+            color: white;
+        }
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .calendar-nav button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+        .stopwatch-display {
+            font-size: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            font-family: monospace;
+        }
+        .stopwatch-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .stopwatch-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .stopwatch-btn.start {
+            background: var(--success);
+            color: white;
+        }
+        .stopwatch-btn.stop {
+            background: var(--danger);
+            color: white;
+        }
+        .stopwatch-btn.reset {
+            background: var(--gray);
+            color: white;
+        }
+        .pomodoro-display {
+            font-size: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            font-family: monospace;
+        }
+        .pomodoro-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .pomodoro-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .pomodoro-btn.start {
+            background: var(--success);
+            color: white;
+        }
+        .pomodoro-btn.pause {
+            background: var(--warning);
+            color: white;
+        }
+        .pomodoro-btn.reset {
+            background: var(--gray);
+            color: white;
+        }
+        .world-clock-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .world-clock {
+            background: var(--light);
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .world-clock-time {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        .world-clock-city {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .habit-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .habit-item:last-child {
+            border-bottom: none;
+        }
+        .habit-checkbox {
+            margin-right: 1rem;
+        }
+        .habit-name {
+            flex: 1;
+        }
+        .habit-streak {
+            color: var(--success);
+            font-weight: bold;
+        }
+        .goal-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+        .goal-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        .goal-title {
+            font-weight: bold;
+        }
+        .goal-progress {
+            margin: 0.5rem 0;
+        }
+        .progress-bar {
+            height: 10px;
+            background: var(--light);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 5px;
+        }
+        .goal-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .age-result {
+            text-align: center;
+            margin: 1rem 0;
+        }
+        .age-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .image-preview {
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+            border-radius: 6px;
+        }
+        .meme-container {
+            position: relative;
+            display: inline-block;
+            margin: 1rem 0;
+        }
+        .meme-image {
+            max-width: 100%;
+            height: auto;
+        }
+        .meme-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+        }
+        .meme-top {
+            top: 10%;
+        }
+        .meme-bottom {
+            bottom: 10%;
+        }
+        .recorder-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .recorder-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .recorder-btn.record {
+            background: var(--danger);
+            color: white;
+        }
+        .recorder-btn.stop {
+            background: var(--gray);
+            color: white;
+        }
+        .recorder-btn.play {
+            background: var(--success);
+            color: white;
+        }
+        .currency-rates {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .flashcard {
+            background: var(--card-bg);
+            border-radius: 6px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+        .flashcard-front, .flashcard-back {
+            font-size: 1.2rem;
+        }
+        .flashcard-back {
+            display: none;
+        }
+        .flashcard.flipped .flashcard-front {
+            display: none;
+        }
+        .flashcard.flipped .flashcard-back {
+            display: block;
+        }
+        .flashcard-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .mindmap-container {
+            width: 100%;
+            height: 300px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin: 1rem 0;
+            overflow: auto;
+            background: var(--light);
+            position: relative;
+        }
+        .mindmap-node {
+            position: absolute;
+            background: var(--primary);
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            min-width: 100px;
+            text-align: center;
+            cursor: move;
+            user-select: none;
+        }
+        .dictionary-result {
+            margin-top: 1rem;
+        }
+        .dictionary-word {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .dictionary-phonetic {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .dictionary-meanings {
+            margin-top: 1rem;
+        }
+        .dictionary-meaning {
+            margin-bottom: 1rem;
+        }
+        .dictionary-partOfSpeech {
+            font-style: italic;
+            color: var(--primary);
+        }
+        .citation-output {
+            background: var(--light);
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        @media (min-width: 768px) {
+            .tool-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            .modal {
+                max-width: 500px;
+                margin: 2rem auto;
+                border-radius: var(--radius);
+                transform: scale(0.9);
+            }
+            .modal-overlay.active .modal {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">All-in-One Toolkit</h1>
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search tools..." id="searchInput">
+                </div>
+                <button class="fav-btn" id="favBtn">⭐</button>
+            </div>
+        </header>
+        
+        <div class="category-chips" id="categoryChips">
+            <button class="category-chip active" data-category="all">All</button>
+            <button class="category-chip" data-category="productivity">Productivity</button>
+            <button class="category-chip" data-category="files">Files & PDF</button>
+            <button class="category-chip" data-category="media">Images & Media</button>
+            <button class="category-chip" data-category="calculators">Calculators</button>
+            <button class="category-chip" data-category="study">Study & Writing</button>
+        </div>
+        
+        <main class="tool-grid" id="toolGrid"></main>
+        
+        <nav class="bottom-nav" id="bottomNav">
+            <a href="#home" class="nav-item active" data-tab="home">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="#categories" class="nav-item" data-tab="categories">
+                <span class="nav-icon">📂</span>
+                <span>Categories</span>
+            </a>
+            <a href="#favorites" class="nav-item" data-tab="favorites">
+                <span class="nav-icon">⭐</span>
+                <span>Favorites</span>
+            </a>
+            <a href="#recent" class="nav-item" data-tab="recent">
+                <span class="nav-icon">🕒</span>
+                <span>Recent</span>
+            </a>
+            <a href="#settings" class="nav-item" data-tab="settings">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+        
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal" id="modal">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modalTitle">Tool Title</h2>
+                    <button class="modal-close" id="modalClose">&times;</button>
+                </div>
+                <div class="modal-content" id="modalContent"></div>
+                <div class="modal-actions" id="modalActions"></div>
+            </div>
+        </div>
+        
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <script>
+        const state = {
+            currentView: 'home',
+            currentTool: null,
+            favorites: JSON.parse(localStorage.getItem('favorites')) || [],
+            recent: JSON.parse(localStorage.getItem('recent')) || [],
+            theme: localStorage.getItem('theme') || 'light',
+            searchQuery: '',
+            currentCategory: 'all'
+        };
+
+        document.documentElement.setAttribute('data-theme', state.theme);
+
+        const TOOLS = [
+            {
+                id: 'day-counter',
+                name: 'Day Counter',
+                category: 'productivity',
+                keywords: ['countdown', 'timer', 'dday'],
+                description: 'Countdown to target dates',
+                icon: '📅'
+            },
+            {
+                id: 'todo',
+                name: 'To-Do List',
+                category: 'productivity',
+                keywords: ['tasks', 'list', 'organize'],
+                description: 'Manage your daily tasks',
+                icon: '✅'
+            },
+            {
+                id: 'pomodoro',
+                name: 'Pomodoro Timer',
+                category: 'productivity',
+                keywords: ['focus', 'timer', 'work'],
+                description: 'Focus timer with work/break cycles',
+                icon: '⏱️'
+            },
+            {
+                id: 'calendar',
+                name: 'Calendar',
+                category: 'productivity',
+                keywords: ['events', 'notes', 'schedule'],
+                description: 'Monthly calendar with notes',
+                icon: '🗓️'
+            },
+            {
+                id: 'stopwatch',
+                name: 'Stopwatch',
+                category: 'productivity',
+                keywords: ['timer', 'lap', 'time'],
+                description: 'Precise stopwatch with laps',
+                icon: '⏱️'
+            },
+            {
+                id: 'world-clock',
+                name: 'World Clock',
+                category: 'productivity',
+                keywords: ['timezone', 'time', 'cities'],
+                description: 'Multiple timezone clocks',
+                icon: '🌍'
+            },
+            {
+                id: 'habit-tracker',
+                name: 'Habit Tracker',
+                category: 'productivity',
+                keywords: ['habits', 'streak', 'daily'],
+                description: 'Track daily habits and streaks',
+                icon: '📈'
+            },
+            {
+                id: 'goal-tracker',
+                name: 'Goal Progress',
+                category: 'productivity',
+                keywords: ['progress', 'goals', 'tracking'],
+                description: 'Track progress towards goals',
+                icon: '🎯'
+            },
+            {
+                id: 'age-calculator',
+                name: 'Age Calculator',
+                category: 'productivity',
+                keywords: ['birthday', 'age', 'calculator'],
+                description: 'Calculate age and next birthday',
+                icon: '🎂'
+            },
+            {
+                id: 'qr-generator',
+                name: 'QR Code Generator',
+                category: 'files',
+                keywords: ['barcode', 'qr', 'code'],
+                description: 'Generate QR codes from text',
+                icon: '🔲'
+            },
+            {
+                id: 'text-qr',
+                name: 'Text to QR',
+                category: 'files',
+                keywords: ['text', 'qr', 'convert'],
+                description: 'Convert text to QR code',
+                icon: '🔤'
+            },
+            {
+                id: 'url-shortener',
+                name: 'URL Shortener',
+                category: 'files',
+                keywords: ['link', 'shorten', 'alias'],
+                description: 'Create short aliases for URLs',
+                icon: '🔗'
+            },
+            {
+                id: 'image-resizer',
+                name: 'Image Resizer',
+                category: 'media',
+                keywords: ['resize', 'images', 'dimensions'],
+                description: 'Resize images to custom dimensions',
+                icon: '📏'
+            },
+            {
+                id: 'image-cropper',
+                name: 'Image Cropper',
+                category: 'media',
+                keywords: ['crop', 'images', 'edit'],
+                description: 'Crop images with precision',
+                icon: '✂️'
+            },
+            {
+                id: 'bg-remover',
+                name: 'Background Remover',
+                category: 'media',
+                keywords: ['remove', 'background', 'transparent'],
+                description: 'Remove image backgrounds',
+                icon: '🖼️'
+            },
+            {
+                id: 'format-converter',
+                name: 'Format Converter',
+                category: 'media',
+                keywords: ['convert', 'png', 'jpeg', 'webp'],
+                description: 'Convert between image formats',
+                icon: '🔄'
+            },
+            {
+                id: 'meme-generator',
+                name: 'Meme Generator',
+                category: 'media',
+                keywords: ['meme', 'text', 'funny'],
+                description: 'Create memes with text',
+                icon: '😂'
+            },
+            {
+                id: 'text-speech',
+                name: 'Text to Speech',
+                category: 'media',
+                keywords: ['voice', 'speak', 'audio'],
+                description: 'Convert text to speech',
+                icon: '🔊'
+            },
+            {
+                id: 'voice-recorder',
+                name: 'Voice Recorder',
+                category: 'media',
+                keywords: ['record', 'audio', 'voice'],
+                description: 'Record and save audio',
+                icon: '🎙️'
+            },
+            {
+                id: 'bmi-calculator',
+                name: 'BMI Calculator',
+                category: 'calculators',
+                keywords: ['health', 'weight', 'height'],
+                description: 'Calculate Body Mass Index',
+                icon: '📊'
+            },
+            {
+                id: 'unit-converter',
+                name: 'Unit Converter',
+                category: 'calculators',
+                keywords: ['convert', 'units', 'measurement'],
+                description: 'Convert between different units',
+                icon: '📐'
+            },
+            {
+                id: 'currency-converter',
+                name: 'Currency Converter',
+                category: 'calculators',
+                keywords: ['money', 'exchange', 'rates'],
+                description: 'Convert between currencies',
+                icon: '💰'
+            },
+            {
+                id: 'percentage-calculator',
+                name: 'Percentage Calculator',
+                category: 'calculators',
+                keywords: ['percent', 'calculate', 'math'],
+                description: 'Solve percentage problems',
+                icon: '🔢'
+            },
+            {
+                id: 'loan-calculator',
+                name: 'Loan Calculator',
+                category: 'calculators',
+                keywords: ['emi', 'loan', 'interest'],
+                description: 'Calculate loan payments',
+                icon: '💳'
+            },
+            {
+                id: 'tip-calculator',
+                name: 'Tip Calculator',
+                category: 'calculators',
+                keywords: ['tip', 'bill', 'restaurant'],
+                description: 'Calculate restaurant tips',
+                icon: '🍽️'
+            },
+            {
+                id: 'password-generator',
+                name: 'Password Generator',
+                category: 'calculators',
+                keywords: ['password', 'secure', 'generate'],
+                description: 'Generate secure passwords',
+                icon: '🔒'
+            },
+            {
+                id: 'dice-roller',
+                name: 'Dice Roller',
+                category: 'calculators',
+                keywords: ['dice', 'roll', 'game'],
+                description: 'Roll virtual dice',
+                icon: '🎲'
+            },
+            {
+                id: 'random-number',
+                name: 'Random Number',
+                category: 'calculators',
+                keywords: ['random', 'generator', 'number'],
+                description: 'Generate random numbers',
+                icon: '🎲'
+            },
+            {
+                id: 'quote-generator',
+                name: 'Daily Quote',
+                category: 'study',
+                keywords: ['quotes', 'inspiration', 'motivation'],
+                description: 'Daily inspirational quotes',
+                icon: '💬'
+            },
+            {
+                id: 'flashcard-maker',
+                name: 'Flashcard Maker',
+                category: 'study',
+                keywords: ['flashcards', 'study', 'memory'],
+                description: 'Create digital flashcards',
+                icon: '🃏'
+            },
+            {
+                id: 'notes-pad',
+                name: 'Notes Pad',
+                category: 'study',
+                keywords: ['notes', 'write', 'sticky'],
+                description: 'Digital sticky notes',
+                icon: '📝'
+            },
+            {
+                id: 'mind-map',
+                name: 'Mind Map',
+                category: 'study',
+                keywords: ['mindmap', 'diagram', 'brainstorm'],
+                description: 'Create mind maps',
+                icon: '🧠'
+            },
+            {
+                id: 'dictionary',
+                name: 'Dictionary',
+                category: 'study',
+                keywords: ['words', 'definitions', 'thesaurus'],
+                description: 'Offline dictionary',
+                icon: '📚'
+            },
+            {
+                id: 'citation-generator',
+                name: 'Citation Generator',
+                category: 'study',
+                keywords: ['cite', 'apa', 'mla', 'references'],
+                description: 'Generate citations',
+                icon: '📑'
+            }
+        ];
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function saveToStorage(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+                return true;
+            } catch (e) {
+                console.error('Storage error:', e);
+                return false;
+            }
+        }
+
+        function loadFromStorage(key, defaultValue = null) {
+            try {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : defaultValue;
+            } catch (e) {
+                console.error('Storage error:', e);
+                return defaultValue;
+            }
+        }
+
+        function addToFavorites(toolId) {
+            if (!state.favorites.includes(toolId)) {
+                state.favorites.push(toolId);
+                saveToStorage('favorites', state.favorites);
+                updateUI();
+            }
+        }
+
+        function removeFromFavorites(toolId) {
+            state.favorites = state.favorites.filter(id => id !== toolId);
+            saveToStorage('favorites', state.favorites);
+            updateUI();
+        }
+
+        function addToRecent(toolId) {
+            state.recent = state.recent.filter(id => id !== toolId);
+            state.recent.unshift(toolId);
+            state.recent = state.recent.slice(0, 10);
+            saveToStorage('recent', state.recent);
+        }
+
+        function openModal(toolId) {
+            const tool = TOOLS.find(t => t.id === toolId);
+            if (!tool) return;
+            state.currentTool = toolId;
+            addToRecent(toolId);
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            const modalActions = document.getElementById('modalActions');
+            modalTitle.textContent = tool.name;
+            modalContent.innerHTML = getToolContent(toolId);
+            modalActions.innerHTML = getToolActions(toolId);
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            initializeTool(toolId);
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            state.currentTool = null;
+        }
+
+        function updateUI() {
+            renderToolGrid();
+            updateBottomNav();
+        }
+
+        function renderToolGrid() {
+            const grid = document.getElementById('toolGrid');
+            let filteredTools = filterTools();
+            
+            if (state.currentView === 'favorites') {
+                filteredTools = filteredTools.filter(tool => state.favorites.includes(tool.id));
+            } else if (state.currentView === 'recent') {
+                filteredTools = state.recent.map(id => TOOLS.find(tool => tool.id === id)).filter(Boolean);
+            }
+            
+            grid.innerHTML = filteredTools.map(tool => `
+                <div class="tool-card" data-tool="${tool.id}">
+                    <div class="tool-icon">${tool.icon}</div>
+                    <h3 class="tool-title">${tool.name}</h3>
+                    <p class="tool-desc">${tool.description}</p>
+                    <div class="tool-actions">
+                        <button class="open-btn" onclick="openModal('${tool.id}')">Open</button>
+                        <button class="fav-star ${state.favorites.includes(tool.id) ? 'active' : ''}" 
+                                onclick="toggleFavorite('${tool.id}')">★</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterTools() {
+            let filtered = TOOLS;
+            if (state.currentCategory !== 'all') {
+                filtered = filtered.filter(tool => tool.category === state.currentCategory);
+            }
+            if (state.searchQuery) {
+                const query = state.searchQuery.toLowerCase();
+                filtered = filtered.filter(tool => 
+                    tool.name.toLowerCase().includes(query) ||
+                    tool.description.toLowerCase().includes(query) ||
+                    tool.keywords.some(kw => kw.toLowerCase().includes(query))
+                );
+            }
+            return filtered;
+        }
+
+        function updateBottomNav() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            const activeTab = document.querySelector(`[data-tab="${state.currentView}"]`);
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+        }
+
+        function toggleFavorite(toolId) {
+            if (state.favorites.includes(toolId)) {
+                removeFromFavorites(toolId);
+                showToast('Removed from favorites');
+            } else {
+                addToFavorites(toolId);
+                showToast('Added to favorites');
+            }
+        }
+
+        function getToolContent(toolId) {
+            switch(toolId) {
+                case 'day-counter':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Event Name</label>
+                            <input type="text" class="form-input" id="eventName" placeholder="Enter event name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Target Date</label>
+                            <input type="date" class="form-input" id="targetDate">
+                        </div>
+                        <button class="modal-btn primary" onclick="addCountdown()">Add Countdown</button>
+                        <button class="modal-btn secondary" onclick="startCountdown()">Start Countdown</button>
+                        <div class="result-container hidden" id="countdownResult">
+                            <div class="result-title">Countdown</div>
+                            <div class="result-content" id="countdownDisplay"></div>
+                        </div>
+                    `;
+                case 'todo':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">New Task</label>
+                            <input type="text" class="form-input" id="newTask" placeholder="Enter task description">
+                            <button class="modal-btn primary mt-1" onclick="addTodo()">Add Task</button>
+                        </div>
+                        <div class="result-container">
+                            <div class="result-title">Your Tasks</div>
+                            <div class="result-content" id="todoItems"></div>
+                        </div>
+                    `;
+                case 'pomodoro':
+                    return `
+                        <div class="pomodoro-display" id="pomodoroDisplay">25:00</div>
+                        <div class="pomodoro-controls">
+                            <button class="pomodoro-btn start" onclick="startPomodoro()">Start</button>
+                            <button class="pomodoro-btn pause" onclick="pausePomodoro()">Pause</button>
+                            <button class="pomodoro-btn reset" onclick="resetPomodoro()">Reset</button>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Work Duration (minutes)</label>
+                            <input type="number" class="form-input" id="workDuration" value="25" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Break Duration (minutes)</label>
+                            <input type="number" class="form-input" id="breakDuration" value="5" min="1">
+                        </div>
+                    `;
+                case 'calendar':
+                    return `
+                        <div class="calendar-nav">
+                            <button onclick="prevMonth()"><</button>
+                            <span id="currentMonthYear">Month Year</span>
+                            <button onclick="nextMonth()">></button>
+                        </div>
+                        <div class="calendar" id="calendarContainer"></div>
+                    `;
+                case 'stopwatch':
+                    return `
+                        <div class="stopwatch-display" id="stopwatchDisplay">00:00:00</div>
+                        <div class="stopwatch-controls">
+                            <button class="stopwatch-btn start" onclick="startStopwatch()">Start</button>
+                            <button class="stopwatch-btn stop" onclick="stopStopwatch()">Stop</button>
+                            <button class="stopwatch-btn reset" onclick="resetStopwatch()">Reset</button>
+                        </div>
+                        <div class="result-container">
+                            <div class="result-title">Lap Times</div>
+                            <div class="result-content" id="lapTimes"></div>
+                        </div>
+                    `;
+                case 'world-clock':
+                    return `
+                        <div class="world-clock-container" id="worldClockContainer">
+                            <div class="world-clock">
+                                <div class="world-clock-city">New York</div>
+                                <div class="world-clock-time" id="ny-time"></div>
+                            </div>
+                            <div class="world-clock">
+                                <div class="world-clock-city">London</div>
+                                <div class="world-clock-time" id="london-time"></div>
+                            </div>
+                            <div class="world-clock">
+                                <div class="world-clock-city">Tokyo</div>
+                                <div class="world-clock-time" id="tokyo-time"></div>
+                            </div>
+                        </div>
+                    `;
+                case 'habit-tracker':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">New Habit</label>
+                            <input type="text" class="form-input" id="newHabit" placeholder="Enter habit name">
+                            <button class="modal-btn primary mt-1" onclick="addHabit()">Add Habit</button>
+                        </div>
+                        <div class="result-container">
+                            <div class="result-title">Your Habits</div>
+                            <div class="result-content" id="habitList"></div>
+                        </div>
+                    `;
+                case 'goal-tracker':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Goal Name</label>
+                            <input type="text" class="form-input" id="goalName" placeholder="Enter goal name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Target Value</label>
+                            <input type="number" class="form-input" id="goalTarget" placeholder="Enter target value">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Current Value</label>
+                            <input type="number" class="form-input" id="goalCurrent" placeholder="Enter current value">
+                        </div>
+                        <button class="modal-btn primary" onclick="addGoal()">Add Goal</button>
+                        <div class="result-container">
+                            <div class="result-title">Your Goals</div>
+                            <div class="result-content" id="goalList"></div>
+                        </div>
+                    `;
+                case 'age-calculator':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Your Birthdate</label>
+                            <input type="date" class="form-input" id="birthDate">
+                        </div>
+                        <button class="modal-btn primary" onclick="calculateAge()">Calculate Age</button>
+                        <div class="result-container hidden" id="ageResult">
+                            <div class="age-result">
+                                <div class="result-title">Your Age</div>
+                                <div class="age-number" id="ageDisplay"></div>
+                                <div id="nextBirthday"></div>
+                            </div>
+                        </div>
+                    `;
+                case 'qr-generator':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Text to Encode</label>
+                            <textarea class="form-textarea" id="qrText" placeholder="Enter text for QR code"></textarea>
+                        </div>
+                        <button class="modal-btn primary" onclick="generateQRCode()">Generate QR Code</button>
+                        <button class="modal-btn secondary" onclick="downloadQRCode()">Download</button>
+                        <div class="qr-code-container hidden" id="qrCodeContainer">
+                            <img id="qrCodeImage" class="qr-code" alt="QR Code">
+                        </div>
+                    `;
+                case 'text-qr':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Text to Convert</label>
+                            <textarea class="form-textarea" id="textForQR" placeholder="Enter text to convert to QR"></textarea>
+                        </div>
+                        <button class="modal-btn primary" onclick="convertTextToQR()">Convert to QR</button>
+                        <button class="modal-btn secondary" onclick="downloadTextQR()">Download</button>
+                        <div class="qr-code-container hidden" id="textQRContainer">
+                            <img id="textQRImage" class="qr-code" alt="QR Code">
+                        </div>
+                    `;
+                case 'url-shortener':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Long URL</label>
+                            <input type="url" class="form-input" id="longUrl" placeholder="Enter long URL">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Custom Alias (optional)</label>
+                            <input type="text" class="form-input" id="customAlias" placeholder="Enter custom alias">
+                        </div>
+                        <button class="modal-btn primary" onclick="shortenUrl()">Shorten URL</button>
+                        <div class="result-container hidden" id="shortenedUrlResult">
+                            <div class="result-title">Shortened URL</div>
+                            <div class="result-content" id="shortenedUrlDisplay"></div>
+                        </div>
+                    `;
+                case 'image-resizer':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Select Image</label>
+                            <label class="file-input-label">
+                                Choose File
+                                <input type="file" class="file-input" id="imageFile" accept="image/*">
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Width (px)</label>
+                            <input type="number" class="form-input" id="resizeWidth" placeholder="Enter width">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Height (px)</label>
+                            <input type="number" class="form-input" id="resizeHeight" placeholder="Enter height">
+                        </div>
+                        <button class="modal-btn primary" onclick="resizeImage()">Resize Image</button>
+                        <button class="modal-btn secondary" onclick="downloadResizedImage()">Download</button>
+                        <div id="imagePreviewContainer"></div>
+                    `;
+                case 'meme-generator':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Top Text</label>
+                            <input type="text" class="form-input" id="memeTopText" placeholder="Enter top text">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Bottom Text</label>
+                            <input type="text" class="form-input" id="memeBottomText" placeholder="Enter bottom text">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Select Image</label>
+                            <label class="file-input-label">
+                                Choose File
+                                <input type="file" class="file-input" id="memeImageFile" accept="image/*">
+                            </label>
+                        </div>
+                        <button class="modal-btn primary" onclick="generateMeme()">Generate Meme</button>
+                        <button class="modal-btn secondary" onclick="downloadMeme()">Download</button>
+                        <div id="memeContainer"></div>
+                    `;
+                case 'format-converter':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Select Image</label>
+                            <label class="file-input-label">
+                                Choose File
+                                <input type="file" class="file-input" id="formatImageFile" accept="image/*">
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Convert to Format</label>
+                            <select class="form-select" id="targetFormat">
+                                <option value="png">PNG</option>
+                                <option value="jpeg">JPEG</option>
+                                <option value="webp">WebP</option>
+                                <option value="gif">GIF</option>
+                            </select>
+                        </div>
+                        <button class="modal-btn primary" onclick="convertImageFormat()">Convert</button>
+                        <div id="formatPreviewContainer"></div>
+                    `;
+                case 'text-speech':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Text to Speak</label>
+                            <textarea class="form-textarea" id="speechText" placeholder="Enter text to convert to speech"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Voice</label>
+                            <select class="form-select" id="voiceSelect">
+                                <option value="">Default</option>
+                            </select>
+                        </div>
+                        <button class="modal-btn primary" onclick="speakText()">Speak</button>
+                        <button class="modal-btn secondary" onclick="stopSpeech()">Stop</button>
+                    `;
+                case 'voice-recorder':
+                    return `
+                        <div class="recorder-controls">
+                            <button class="recorder-btn record" onclick="startRecording()">Record</button>
+                            <button class="recorder-btn stop" onclick="stopRecording()">Stop</button>
+                        </div>
+                        <div class="result-container">
+                            <div class="result-title">Recording Status</div>
+                            <div class="result-content" id="recordingStatus">Ready to record</div>
+                        </div>
+                    `;
+                case 'bmi-calculator':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Height (cm)</label>
+                            <input type="number" class="form-input" id="height" placeholder="Enter height">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Weight (kg)</label>
+                            <input type="number" class="form-input" id="weight" placeholder="Enter weight">
+                        </div>
+                        <button class="modal-btn primary" onclick="calculateBMI()">Calculate BMI</button>
+                        <button class="modal-btn secondary" onclick="resetBMI()">Reset</button>
+                        <div class="result-container hidden" id="bmiResult">
+                            <div class="result-title">Your BMI Result</div>
+                            <div class="result-content" id="bmiDisplay"></div>
+                        </div>
+                    `;
+                case 'unit-converter':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Convert</label>
+                            <select class="form-select" id="unitType" onchange="updateUnitOptions()">
+                                <option value="length">Length</option>
+                                <option value="weight">Weight</option>
+                                <option value="temperature">Temperature</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">From</label>
+                            <select class="form-select" id="fromUnit"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Value</label>
+                            <input type="number" class="form-input" id="fromValue" placeholder="Enter value">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">To</label>
+                            <select class="form-select" id="toUnit"></select>
+                        </div>
+                        <button class="modal-btn primary" onclick="convertUnits()">Convert</button>
+                        <button class="modal-btn secondary" onclick="swapUnits()">Swap</button>
+                        <div class="result-container hidden" id="unitResult">
+                            <div class="result-title">Conversion Result</div>
+                            <div class="result-content" id="unitDisplay"></div>
+                        </div>
+                    `;
+                case 'currency-converter':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">From Currency</label>
+                            <select class="form-select" id="fromCurrency">
+                                <option value="USD">USD - US Dollar</option>
+                                <option value="EUR">EUR - Euro</option>
+                                <option value="GBP">GBP - British Pound</option>
+                                <option value="JPY">JPY - Japanese Yen</option>
+                                <option value="INR">INR - Indian Rupee</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Amount</label>
+                            <input type="number" class="form-input" id="currencyAmount" placeholder="Enter amount">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">To Currency</label>
+                            <select class="form-select" id="toCurrency">
+                                <option value="USD">USD - US Dollar</option>
+                                <option value="EUR">EUR - Euro</option>
+                                <option value="GBP">GBP - British Pound</option>
+                                <option value="JPY">JPY - Japanese Yen</option>
+                                <option value="INR">INR - Indian Rupee</option>
+                            </select>
+                        </div>
+                        <button class="modal-btn primary" onclick="convertCurrency()">Convert</button>
+                        <button class="modal-btn secondary" onclick="swapCurrencies()">Swap</button>
+                        <div class="result-container hidden" id="currencyResult">
+                            <div class="result-title">Conversion Result</div>
+                            <div class="result-content" id="currencyDisplay"></div>
+                        </div>
+                    `;
+                case 'loan-calculator':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Loan Amount ($)</label>
+                            <input type="number" class="form-input" id="loanAmount" placeholder="Enter loan amount">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Interest Rate (%)</label>
+                            <input type="number" class="form-input" id="interestRate" placeholder="Enter annual interest rate" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Loan Term (years)</label>
+                            <input type="number" class="form-input" id="loanYears" placeholder="Enter loan term in years">
+                        </div>
+                        <button class="modal-btn primary" onclick="calculateLoan()">Calculate Loan</button>
+                        <div class="result-container hidden" id="loanResultContainer">
+                            <div class="result-title">Loan Details</div>
+                            <div class="result-content" id="loanResult"></div>
+                        </div>
+                    `;
+                case 'password-generator':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Password Length</label>
+                            <input type="number" class="form-input" id="passwordLength" value="12" min="4" max="50">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="includeUppercase" checked> Include Uppercase
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="includeLowercase" checked> Include Lowercase
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="includeNumbers" checked> Include Numbers
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="includeSymbols" checked> Include Symbols
+                            </label>
+                        </div>
+                        <button class="modal-btn primary" onclick="generatePassword()">Generate Password</button>
+                        <button class="modal-btn secondary" onclick="copyPassword()">Copy</button>
+                        <div class="result-container hidden" id="passwordResult">
+                            <div class="result-title">Generated Password</div>
+                            <div class="result-content" id="passwordDisplay"></div>
+                        </div>
+                    `;
+                case 'dice-roller':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Dice Type</label>
+                            <select class="form-select" id="diceType">
+                                <option value="6">D6 (6-sided)</option>
+                                <option value="20">D20 (20-sided)</option>
+                                <option value="100">D100 (100-sided)</option>
+                            </select>
+                        </div>
+                        <button class="modal-btn primary" onclick="rollDice()">Roll Dice</button>
+                        <button class="modal-btn secondary" onclick="clearRolls()">Clear Rolls</button>
+                        <div class="result-container" id="diceResult">
+                            <div class="result-title">Roll Results</div>
+                            <div class="result-content" id="diceDisplay"></div>
+                        </div>
+                    `;
+                case 'random-number':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Minimum Value</label>
+                            <input type="number" class="form-input" id="minValue" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Maximum Value</label>
+                            <input type="number" class="form-input" id="maxValue" value="100">
+                        </div>
+                        <button class="modal-btn primary" onclick="generateRandomNumber()">Generate Random Number</button>
+                        <div class="result-container hidden" id="randomResult">
+                            <div class="result-title">Random Number</div>
+                            <div class="result-content" id="randomDisplay"></div>
+                        </div>
+                    `;
+                case 'quote-generator':
+                    return `
+                        <div class="text-center mb-3">
+                            <button class="modal-btn primary" onclick="generateQuote()">Get New Quote</button>
+                            <button class="modal-btn secondary" onclick="copyQuote()">Copy Quote</button>
+                        </div>
+                        <div class="result-container" id="quoteResult">
+                            <div class="result-content" id="quoteDisplay"></div>
+                        </div>
+                    `;
+                case 'flashcard-maker':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Front Text</label>
+                            <textarea class="form-textarea" id="flashcardFront" placeholder="Enter front text"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Back Text</label>
+                            <textarea class="form-textarea" id="flashcardBack" placeholder="Enter back text"></textarea>
+                        </div>
+                        <button class="modal-btn primary" onclick="addFlashcard()">Add Flashcard</button>
+                        <div class="flashcard-controls">
+                            <button class="modal-btn secondary" onclick="prevFlashcard()">Previous</button>
+                            <button class="modal-btn secondary" onclick="nextFlashcard()">Next</button>
+                            <button class="modal-btn secondary" onclick="deleteFlashcard()">Delete</button>
+                        </div>
+                        <div class="flashcard" id="flashcardDisplay" onclick="flipFlashcard()">
+                            <div class="flashcard-front">Click to flip</div>
+                            <div class="flashcard-back"></div>
+                        </div>
+                    `;
+                case 'notes-pad':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Note Title</label>
+                            <input type="text" class="form-input" id="noteTitle" placeholder="Enter note title">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Note Content</label>
+                            <textarea class="form-textarea" id="noteContent" placeholder="Enter your note"></textarea>
+                        </div>
+                        <button class="modal-btn primary" onclick="saveNote()">Save Note</button>
+                        <button class="modal-btn secondary" onclick="clearNote()">Clear</button>
+                        <div class="result-container">
+                            <div class="result-title">Saved Notes</div>
+                            <div class="result-content" id="savedNotes"></div>
+                        </div>
+                    `;
+                case 'mind-map':
+                    return `
+                        <div class="mindmap-container" id="mindmapContainer">
+                            <div class="mindmap-node" style="left: 150px; top: 150px;" contenteditable="true">Main Idea</div>
+                        </div>
+                        <button class="modal-btn primary" onclick="addMindMapNode()">Add Node</button>
+                    `;
+                case 'dictionary':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Word to Define</label>
+                            <input type="text" class="form-input" id="dictionaryWord" placeholder="Enter a word">
+                        </div>
+                        <button class="modal-btn primary" onclick="lookupWord()">Lookup Word</button>
+                        <div class="dictionary-result hidden" id="dictionaryResult">
+                            <div class="dictionary-word" id="dictWord"></div>
+                            <div class="dictionary-phonetic" id="dictPhonetic"></div>
+                            <div class="dictionary-meanings" id="dictMeanings"></div>
+                        </div>
+                    `;
+                case 'citation-generator':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">Author</label>
+                            <input type="text" class="form-input" id="citationAuthor" placeholder="Author name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-input" id="citationTitle" placeholder="Work title">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Publication Year</label>
+                            <input type="number" class="form-input" id="citationYear" placeholder="Year">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Citation Style</label>
+                            <select class="form-select" id="citationStyle">
+                                <option value="apa">APA</option>
+                                <option value="mla">MLA</option>
+                            </select>
+                        </div>
+                        <button class="modal-btn primary" onclick="generateCitation()">Generate Citation</button>
+                        <button class="modal-btn secondary" onclick="copyCitation()">Copy Citation</button>
+                        <div class="citation-output hidden" id="citationOutput"></div>
+                    `;
+                case 'settings':
+                    return `
+                        <div class="settings-item">
+                            <div class="d-flex justify-between align-center">
+                                <div>
+                                    <div class="settings-label">Dark Mode</div>
+                                    <div class="settings-desc">Toggle between light and dark theme</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="darkModeToggle" ${state.theme === 'dark' ? 'checked' : ''}>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="settings-item">
+                            <div class="d-flex justify-between align-center">
+                                <div>
+                                    <div class="settings-label">Clear All Data</div>
+                                    <div class="settings-desc">Remove all saved data and preferences</div>
+                                </div>
+                                <button class="modal-btn secondary" onclick="clearAllData()">Clear Data</button>
+                            </div>
+                        </div>
+                    `;
+                default:
+                    return `<p>This tool is under development. Please check back soon!</p>`;
+            }
+        }
+
+        function getToolActions(toolId) {
+            return `<button class="modal-btn primary" onclick="closeModal()">Close</button>`;
+        }
+
+        function initializeTool(toolId) {
+            switch(toolId) {
+                case 'day-counter':
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    document.getElementById('targetDate').value = tomorrow.toISOString().split('T')[0];
+                    break;
+                case 'todo':
+                    loadTodos();
+                    break;
+                case 'calendar':
+                    renderCalendar();
+                    break;
+                case 'world-clock':
+                    updateWorldClocks();
+                    setInterval(updateWorldClocks, 1000);
+                    break;
+                case 'habit-tracker':
+                    loadHabits();
+                    break;
+                case 'goal-tracker':
+                    loadGoals();
+                    break;
+                case 'quote-generator':
+                    generateQuote();
+                    break;
+                case 'flashcard-maker':
+                    loadFlashcards();
+                    break;
+                case 'notes-pad':
+                    loadNotes();
+                    break;
+                case 'settings':
+                    initializeSettings();
+                    break;
+                case 'unit-converter':
+                    updateUnitOptions();
+                    break;
+            }
+        }
+
+        // Tool implementations
+        let countdowns = loadFromStorage('countdowns', []);
+        function addCountdown() {
+            const eventName = document.getElementById('eventName').value;
+            const targetDate = document.getElementById('targetDate').value;
+            if (!eventName || !targetDate) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+            countdowns.push({ name: eventName, target: new Date(targetDate).getTime() });
+            saveToStorage('countdowns', countdowns);
+            showToast('Countdown added!');
+        }
+        function startCountdown() {
+            if (countdowns.length === 0) {
+                showToast('No countdowns set', 'error');
+                return;
+            }
+            const countdown = countdowns[0];
+            const update = () => {
+                const diff = countdown.target - Date.now();
+                if (diff <= 0) {
+                    document.getElementById('countdownDisplay').innerHTML = `${countdown.name} has arrived!`;
+                    return;
+                }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                        document.getElementById('countdownDisplay').innerHTML = `
+                            <div><strong>${countdown.name}</strong></div>
+                            <div>${days}d ${hours}h ${minutes}m ${seconds}s</div>
+                        `;
+                        document.getElementById('countdownResult').classList.remove('hidden');
+                        setTimeout(update, 1000);
+                    };
+                    update();
+                }
+
+                let todos = loadFromStorage('todos', []);
+                function loadTodos() {
+                    const container = document.getElementById('todoItems');
+                    if (todos.length === 0) {
+                        container.innerHTML = '<p>No tasks yet. Add one above!</p>';
+                        return;
+                    }
+                    container.innerHTML = todos.map((todo, index) => `
+                        <div class="d-flex justify-between align-center gap-2 mb-2">
+                            <span>${todo.text}</span>
+                            <button class="modal-btn btn-sm secondary" onclick="deleteTodo(${index})">Delete</button>
+                        </div>
+                    `).join('');
+                }
+                function addTodo() {
+                    const input = document.getElementById('newTask');
+                    const text = input.value.trim();
+                    if (!text) {
+                        showToast('Please enter a task', 'error');
+                        return;
+                    }
+                    todos.push({ text });
+                    saveToStorage('todos', todos);
+                    input.value = '';
+                    loadTodos();
+                    showToast('Task added!');
+                }
+                function deleteTodo(index) {
+                    todos.splice(index, 1);
+                    saveToStorage('todos', todos);
+                    loadTodos();
+                }
+
+                let pomodoroInterval;
+                let pomodoroTimeLeft = 25 * 60;
+                let isPomodoroRunning = false;
+                function startPomodoro() {
+                    if (isPomodoroRunning) return;
+                    isPomodoroRunning = true;
+                    const startTime = Date.now();
+                    pomodoroInterval = setInterval(() => {
+                        pomodoroTimeLeft = 25 * 60 - Math.floor((Date.now() - startTime) / 1000);
+                        updatePomodoroDisplay();
+                        if (pomodoroTimeLeft <= 0) {
+                            clearInterval(pomodoroInterval);
+                            isPomodoroRunning = false;
+                            showToast('Time is up!');
+                        }
+                    }, 1000);
+                }
+                function pausePomodoro() {
+                    clearInterval(pomodoroInterval);
+                    isPomodoroRunning = false;
+                }
+                function resetPomodoro() {
+                    clearInterval(pomodoroInterval);
+                    isPomodoroRunning = false;
+                    pomodoroTimeLeft = 25 * 60;
+                    updatePomodoroDisplay();
+                }
+                function updatePomodoroDisplay() {
+                    const minutes = Math.floor(pomodoroTimeLeft / 60);
+                    const seconds = pomodoroTimeLeft % 60;
+                    document.getElementById('pomodoroDisplay').textContent = 
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+
+                let currentMonth = new Date().getMonth();
+                let currentYear = new Date().getFullYear();
+                function renderCalendar() {
+                    const monthNames = ["January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"];
+                    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                    
+                    document.getElementById('currentMonthYear').textContent = 
+                        `${monthNames[currentMonth]} ${currentYear}`;
+                    
+                    const container = document.getElementById('calendarContainer');
+                    container.innerHTML = '';
+                    
+                    dayNames.forEach(day => {
+                        const header = document.createElement('div');
+                        header.className = 'calendar-header';
+                        header.textContent = day;
+                        container.appendChild(header);
+                    });
+                    
+                    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+                    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                    
+                    for (let i = 0; i < firstDay; i++) {
+                        const empty = document.createElement('div');
+                        empty.className = 'calendar-day';
+                        container.appendChild(empty);
+                    }
+                    
+                    const today = new Date();
+                    for (let day = 1; day <= daysInMonth; day++) {
+                        const dayElement = document.createElement('div');
+                        dayElement.className = 'calendar-day';
+                        dayElement.textContent = day;
+                        
+                        if (day === today.getDate() && 
+                            currentMonth === today.getMonth() && 
+                            currentYear === today.getFullYear()) {
+                            dayElement.classList.add('today');
+                        }
+                        
+                        container.appendChild(dayElement);
+                    }
+                }
+                function prevMonth() {
+                    currentMonth--;
+                    if (currentMonth < 0) {
+                        currentMonth = 11;
+                        currentYear--;
+                    }
+                    renderCalendar();
+                }
+                function nextMonth() {
+                    currentMonth++;
+                    if (currentMonth > 11) {
+                        currentMonth = 0;
+                        currentYear++;
+                    }
+                    renderCalendar();
+                }
+
+                let stopwatchInterval;
+                let stopwatchTime = 0;
+                let isStopwatchRunning = false;
+                let lapTimes = [];
+                function startStopwatch() {
+                    if (isStopwatchRunning) return;
+                    isStopwatchRunning = true;
+                    const startTime = Date.now() - stopwatchTime;
+                    stopwatchInterval = setInterval(() => {
+                        stopwatchTime = Date.now() - startTime;
+                        updateStopwatchDisplay();
+                    }, 10);
+                }
+                function stopStopwatch() {
+                    clearInterval(stopwatchInterval);
+                    isStopwatchRunning = false;
+                }
+                function resetStopwatch() {
+                    clearInterval(stopwatchInterval);
+                    isStopwatchRunning = false;
+                    stopwatchTime = 0;
+                    updateStopwatchDisplay();
+                    lapTimes = [];
+                    document.getElementById('lapTimes').innerHTML = '';
+                }
+                function updateStopwatchDisplay() {
+                    const time = new Date(stopwatchTime);
+                    const minutes = time.getUTCMinutes().toString().padStart(2, '0');
+                    const seconds = time.getUTCSeconds().toString().padStart(2, '0');
+                    const milliseconds = Math.floor(time.getUTCMilliseconds() / 10).toString().padStart(2, '0');
+                    document.getElementById('stopwatchDisplay').textContent = 
+                        `${minutes}:${seconds}:${milliseconds}`;
+                }
+                function recordLap() {
+                    if (!isStopwatchRunning) return;
+                    const lapTime = document.getElementById('stopwatchDisplay').textContent;
+                    lapTimes.push(lapTime);
+                    document.getElementById('lapTimes').innerHTML = lapTimes.map(lap => 
+                        `<div>Lap ${lapTimes.length}: ${lap}</div>`).join('');
+                }
+
+                function updateWorldClocks() {
+                    const now = new Date();
+                    document.getElementById('ny-time').textContent = new Date(now.getTime() - 4 * 3600000).toLocaleTimeString();
+                    document.getElementById('london-time').textContent = new Date(now.getTime() + 1 * 3600000).toLocaleTimeString();
+                    document.getElementById('tokyo-time').textContent = new Date(now.getTime() + 9 * 3600000).toLocaleTimeString();
+                }
+
+                let habits = loadFromStorage('habits', []);
+                function loadHabits() {
+                    const container = document.getElementById('habitList');
+                    if (habits.length === 0) {
+                        container.innerHTML = '<p>No habits yet. Add one above!</p>';
+                        return;
+                    }
+                    container.innerHTML = habits.map((habit, index) => `
+                        <div class="habit-item">
+                            <input type="checkbox" class="habit-checkbox" ${habit.completed ? 'checked' : ''} 
+                                onchange="toggleHabit(${index})">
+                            <span class="habit-name">${habit.name}</span>
+                            <span class="habit-streak">${habit.streak || 0} days</span>
+                        </div>
+                    `).join('');
+                }
+                function addHabit() {
+                    const input = document.getElementById('newHabit');
+                    const name = input.value.trim();
+                    if (!name) {
+                        showToast('Please enter a habit name', 'error');
+                        return;
+                    }
+                    habits.push({ name, completed: false, streak: 0 });
+                    saveToStorage('habits', habits);
+                    input.value = '';
+                    loadHabits();
+                    showToast('Habit added!');
+                }
+                function toggleHabit(index) {
+                    habits[index].completed = !habits[index].completed;
+                    habits[index].streak = habits[index].completed ? (habits[index].streak || 0) + 1 : 0;
+                    saveToStorage('habits', habits);
+                    loadHabits();
+                }
+
+                let goals = loadFromStorage('goals', []);
+                function loadGoals() {
+                    const container = document.getElementById('goalList');
+                    if (goals.length === 0) {
+                        container.innerHTML = '<p>No goals yet. Add one above!</p>';
+                        return;
+                    }
+                    container.innerHTML = goals.map((goal, index) => {
+                        const progress = goal.target > 0 ? Math.min(100, (goal.current / goal.target) * 100) : 0;
+                        return `
+                            <div class="goal-item">
+                                <div class="goal-header">
+                                    <div class="goal-title">${goal.name}</div>
+                                    <div>${goal.current} / ${goal.target}</div>
+                                </div>
+                                <div class="goal-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${progress}%"></div>
+                                    </div>
+                                </div>
+                                <div class="goal-stats">
+                                    <span>Progress: ${progress.toFixed(1)}%</span>
+                                    <span>${goal.target - goal.current} to go</span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                function addGoal() {
+                    const name = document.getElementById('goalName').value.trim();
+                    const target = parseFloat(document.getElementById('goalTarget').value);
+                    const current = parseFloat(document.getElementById('goalCurrent').value) || 0;
+                    
+                    if (!name || isNaN(target) || target <= 0) {
+                        showToast('Please enter valid goal details', 'error');
+                        return;
+                    }
+                    
+                    goals.push({ name, target, current });
+                    saveToStorage('goals', goals);
+                    document.getElementById('goalName').value = '';
+                    document.getElementById('goalTarget').value = '';
+                    document.getElementById('goalCurrent').value = '';
+                    loadGoals();
+                    showToast('Goal added!');
+                }
+
+                function calculateAge() {
+                    const birthDate = document.getElementById('birthDate').value;
+                    if (!birthDate) {
+                        showToast('Please select a birthdate', 'error');
+                        return;
+                    }
+                    
+                    const birth = new Date(birthDate);
+                    const today = new Date();
+                    
+                    let age = today.getFullYear() - birth.getFullYear();
+                    const monthDiff = today.getMonth() - birth.getMonth();
+                    
+                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+                        age--;
+                    }
+                    
+                    const nextBirthday = new Date(today.getFullYear(), birth.getMonth(), birth.getDate());
+                    if (nextBirthday < today) {
+                        nextBirthday.setFullYear(today.getFullYear() + 1);
+                    }
+                    
+                    const daysToBirthday = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+                    
+                    document.getElementById('ageDisplay').textContent = `${age} years old`;
+                    document.getElementById('nextBirthday').textContent = `Next birthday in ${daysToBirthday} days`;
+                    document.getElementById('ageResult').classList.remove('hidden');
+                }
+
+                function generateQRCode() {
+                    const text = document.getElementById('qrText').value;
+                    if (!text) {
+                        showToast('Please enter text for QR code', 'error');
+                        return;
+                    }
+                    
+                    const qrImage = document.getElementById('qrCodeImage');
+                    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
+                    document.getElementById('qrCodeContainer').classList.remove('hidden');
+                    showToast('QR Code generated!');
+                }
+
+                function downloadQRCode() {
+                    const qrImage = document.getElementById('qrCodeImage');
+                    if (qrImage.src) {
+                        const link = document.createElement('a');
+                        link.href = qrImage.src;
+                        link.download = 'qrcode.png';
+                        link.click();
+                        showToast('QR Code downloaded!');
+                    }
+                }
+
+                function convertTextToQR() {
+                    const text = document.getElementById('textForQR').value;
+                    if (!text) {
+                        showToast('Please enter text to convert', 'error');
+                        return;
+                    }
+                    
+                    const qrImage = document.getElementById('textQRImage');
+                    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
+                    document.getElementById('textQRContainer').classList.remove('hidden');
+                    showToast('Text converted to QR!');
+                }
+
+                function downloadTextQR() {
+                    const qrImage = document.getElementById('textQRImage');
+                    if (qrImage.src) {
+                        const link = document.createElement('a');
+                        link.href = qrImage.src;
+                        link.download = 'text-qrcode.png';
+                        link.click();
+                        showToast('QR Code downloaded!');
+                    }
+                }
+
+                function shortenUrl() {
+                    const longUrl = document.getElementById('longUrl').value;
+                    const customAlias = document.getElementById('customAlias').value;
+                    
+                    if (!longUrl) {
+                        showToast('Please enter a URL', 'error');
+                        return;
+                    }
+                    
+                    const shortUrl = `https://short.link/${customAlias || Math.random().toString(36).substring(2, 8)}`;
+                    
+                    document.getElementById('shortenedUrlDisplay').innerHTML = `
+                        <a href="${shortUrl}" target="_blank">${shortUrl}</a>
+                        <button class="modal-btn btn-sm secondary mt-1" onclick="copyToClipboard('${shortUrl}')">Copy</button>
+                    `;
+                    document.getElementById('shortenedUrlResult').classList.remove('hidden');
+                }
+
+                let resizedImageBlob = null;
+                function resizeImage() {
+                    const file = document.getElementById('imageFile').files[0];
+                    const width = parseInt(document.getElementById('resizeWidth').value);
+                    const height = parseInt(document.getElementById('resizeHeight').value);
+                    
+                    if (!file || isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
+                        showToast('Please select an image and enter valid dimensions', 'error');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = new Image();
+                        img.onload = function() {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = width;
+                            canvas.height = height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+                            
+                            canvas.toBlob(function(blob) {
+                                resizedImageBlob = blob;
+                                const url = URL.createObjectURL(blob);
+                                const previewContainer = document.getElementById('imagePreviewContainer');
+                                previewContainer.innerHTML = `
+                                    <div class="form-group">
+                                        <label class="form-label">Resized Image Preview</label>
+                                        <img src="${url}" class="image-preview" alt="Resized Image">
+                                    </div>
+                                `;
+                                showToast('Image resized successfully!');
+                            });
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+
+                function downloadResizedImage() {
+                    if (resizedImageBlob) {
+                        const url = URL.createObjectURL(resizedImageBlob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'resized-image.png';
+                        link.click();
+                        showToast('Resized image downloaded!');
+                    } else {
+                        showToast('No resized image to download', 'error');
+                    }
+                }
+
+                let memeImageBlob = null;
+                function generateMeme() {
+                    const topText = document.getElementById('memeTopText').value;
+                    const bottomText = document.getElementById('memeBottomText').value;
+                    const file = document.getElementById('memeImageFile').files[0];
+                    
+                    if (!file) {
+                        showToast('Please select an image', 'error');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const container = document.getElementById('memeContainer');
+                        container.innerHTML = `
+                            <div class="meme-container">
+                                <img src="${e.target.result}" class="meme-image" alt="Meme Base">
+                                <div class="meme-text meme-top">${topText}</div>
+                                <div class="meme-text meme-bottom">${bottomText}</div>
+                            </div>
+                        `;
+                        
+                        const img = new Image();
+                        img.onload = function() {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0);
+                            
+                            ctx.font = 'bold 40px Arial';
+                            ctx.fillStyle = 'white';
+                            ctx.strokeStyle = 'black';
+                            ctx.lineWidth = 2;
+                            ctx.textAlign = 'center';
+                            
+                            if (topText) {
+                                ctx.strokeText(topText, canvas.width/2, 50);
+                                ctx.fillText(topText, canvas.width/2, 50);
+                            }
+                            
+                            if (bottomText) {
+                                ctx.strokeText(bottomText, canvas.width/2, canvas.height - 20);
+                                ctx.fillText(bottomText, canvas.width/2, canvas.height - 20);
+                            }
+                            
+                            canvas.toBlob(function(blob) {
+                                memeImageBlob = blob;
+                            });
+                        };
+                        img.src = e.target.result;
+                        
+                        showToast('Meme generated!');
+                    };
+                    reader.readAsDataURL(file);
+                }
+
+                function downloadMeme() {
+                    if (memeImageBlob) {
+                        const url = URL.createObjectURL(memeImageBlob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'meme.png';
+                        link.click();
+                        showToast('Meme downloaded!');
+                    }
+                }
+
+                function convertImageFormat() {
+                    const file = document.getElementById('formatImageFile').files[0];
+                    const format = document.getElementById('targetFormat').value;
+                    
+                    if (!file) {
+                        showToast('Please select an image', 'error');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = new Image();
+                        img.onload = function() {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0);
+                            
+                            canvas.toBlob(function(blob) {
+                                const url = URL.createObjectURL(blob);
+                                const link = document.createElement('a');
+                                link.href = url;
+                                link.download = `converted.${format}`;
+                                link.click();
+                                showToast('Image converted successfully!');
+                            }, `image/${format}`, 0.9);
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+
+                function speakText() {
+                    const text = document.getElementById('speechText').value;
+                    if (!text) {
+                        showToast('Please enter text to speak', 'error');
+                        return;
+                    }
+                    
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    speechSynthesis.speak(utterance);
+                }
+
+                function stopSpeech() {
+                    speechSynthesis.cancel();
+                }
+
+                let mediaRecorder;
+                let audioChunks = [];
+                function startRecording() {
+                    navigator.mediaDevices.getUserMedia({ audio: true })
+                        .then(stream => {
+                            mediaRecorder = new MediaRecorder(stream);
+                            mediaRecorder.start();
+                            audioChunks = [];
+                            
+                            mediaRecorder.addEventListener("dataavailable", event => {
+                                audioChunks.push(event.data);
+                            });
+                            
+                            mediaRecorder.addEventListener("stop", () => {
+                                const audioBlob = new Blob(audioChunks);
+                                const audioUrl = URL.createObjectURL(audioBlob);
+                                document.getElementById('recordingStatus').innerHTML = 
+                                    `Recording stopped. <a href="${audioUrl}" download="recording.webm">Download</a>`;
+                            });
+                            
+                            document.getElementById('recordingStatus').textContent = 'Recording...';
+                        })
+                        .catch(() => {
+                            showToast('Microphone access denied', 'error');
+                        });
+                }
+                function stopRecording() {
+                    if (mediaRecorder && mediaRecorder.state !== "inactive") {
+                        mediaRecorder.stop();
+                    } else {
+                        showToast('No recording in progress', 'error');
+                    }
+                }
+
+                function calculateBMI() {
+                    const height = parseFloat(document.getElementById('height').value);
+                    const weight = parseFloat(document.getElementById('weight').value);
+                    if (!height || !weight || height <= 0 || weight <= 0) {
+                        showToast('Please enter valid values', 'error');
+                        return;
+                    }
+                    const heightInMeters = height / 100;
+                    const bmi = weight / (heightInMeters * heightInMeters);
+                    let category = '';
+                    if (bmi < 18.5) category = 'Underweight';
+                    else if (bmi < 25) category = 'Normal weight';
+                    else if (bmi < 30) category = 'Overweight';
+                    else category = 'Obese';
+                    document.getElementById('bmiDisplay').innerHTML = `
+                        <div>BMI: ${bmi.toFixed(1)}</div>
+                        <div>Category: ${category}</div>
+                    `;
+                    document.getElementById('bmiResult').classList.remove('hidden');
+                }
+                function resetBMI() {
+                    document.getElementById('height').value = '';
+                    document.getElementById('weight').value = '';
+                    document.getElementById('bmiResult').classList.add('hidden');
+                }
+
+                const UNITS = {
+                    length: {
+                        meter: 1, kilometer: 0.001, centimeter: 100, millimeter: 1000,
+                        inch: 39.3701, foot: 3.28084, yard: 1.09361, mile: 0.000621371
+                    },
+                    weight: {
+                        kilogram: 1, gram: 1000, milligram: 1000000,
+                        pound: 2.20462, ounce: 35.274, ton: 0.001
+                    }
+                };
+
+                function updateUnitOptions() {
+                    const type = document.getElementById('unitType').value;
+                    const fromSelect = document.getElementById('fromUnit');
+                    const toSelect = document.getElementById('toUnit');
+                    
+                    fromSelect.innerHTML = '';
+                    toSelect.innerHTML = '';
+                    
+                    Object.keys(UNITS[type] || {}).forEach(unit => {
+                        fromSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+                        toSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+                    });
+                }
+
+                function convertUnits() {
+                    const type = document.getElementById('unitType').value;
+                    const fromUnit = document.getElementById('fromUnit').value;
+                    const toUnit = document.getElementById('toUnit').value;
+                    const fromValue = parseFloat(document.getElementById('fromValue').value);
+                    
+                    if (isNaN(fromValue)) {
+                        showToast('Please enter a valid number', 'error');
+                        return;
+                    }
+                    
+                    const factors = UNITS[type];
+                    const result = (fromValue * factors[fromUnit]) / factors[toUnit];
+                    
+                    document.getElementById('unitDisplay').innerHTML = `${fromValue} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+                    document.getElementById('unitResult').classList.remove('hidden');
+                }
+                function swapUnits() {
+                    const fromUnit = document.getElementById('fromUnit');
+                    const toUnit = document.getElementById('toUnit');
+                    const temp = fromUnit.value;
+                    fromUnit.value = toUnit.value;
+                    toUnit.value = temp;
+                }
+
+                async function convertCurrency() {
+                    const fromCurrency = document.getElementById('fromCurrency').value;
+                    const toCurrency = document.getElementById('toCurrency').value;
+                    const amount = parseFloat(document.getElementById('currencyAmount').value);
+                    
+                    if (isNaN(amount)) {
+                        showToast('Please enter a valid amount', 'error');
+                        return;
+                    }
+                    
+                    // Mock conversion rates
+                    const rates = { USD: 1, EUR: 0.85, GBP: 0.73, JPY: 110, INR: 83 };
+                    const result = amount * (rates[toCurrency] / rates[fromCurrency]);
+                    
+                    document.getElementById('currencyDisplay').innerHTML = `${amount} ${fromCurrency} = ${result.toFixed(2)} ${toCurrency}`;
+                    document.getElementById('currencyResult').classList.remove('hidden');
+                }
+                function swapCurrencies() {
+                    const fromCurrency = document.getElementById('fromCurrency');
+                    const toCurrency = document.getElementById('toCurrency');
+                    const temp = fromCurrency.value;
+                    fromCurrency.value = toCurrency.value;
+                    toCurrency.value = temp;
+                }
+
+                function calculateLoan() {
+                    const principal = parseFloat(document.getElementById('loanAmount').value);
+                    const rate = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
+                    const years = parseFloat(document.getElementById('loanYears').value);
+                    const months = years * 12;
+                    
+                    if (!principal || !rate || !years) {
+                        showToast('Please enter all values', 'error');
+                        return;
+                    }
+                    
+                    const emi = (principal * rate * Math.pow(1 + rate, months)) / (Math.pow(1 + rate, months) - 1);
+                    const totalPayment = emi * months;
+                    const totalInterest = totalPayment - principal;
+                    
+                    document.getElementById('loanResult').innerHTML = `
+                        <div>Monthly EMI: $${emi.toFixed(2)}</div>
+                        <div>Total Payment: $${totalPayment.toFixed(2)}</div>
+                        <div>Total Interest: $${totalInterest.toFixed(2)}</div>
+                    `;
+                    document.getElementById('loanResultContainer').classList.remove('hidden');
+                }
+
+                function generatePassword() {
+                    const length = parseInt(document.getElementById('passwordLength').value) || 12;
+                    const includeUppercase = document.getElementById('includeUppercase').checked;
+                    const includeLowercase = document.getElementById('includeLowercase').checked;
+                    const includeNumbers = document.getElementById('includeNumbers').checked;
+                    const includeSymbols = document.getElementById('includeSymbols').checked;
+                    
+                    if (!includeUppercase && !includeLowercase && !includeNumbers && !includeSymbols) {
+                        showToast('Please select at least one character type', 'error');
+                        return;
+                    }
+                    
+                    let charset = '';
+                    if (includeUppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    if (includeLowercase) charset += 'abcdefghijklmnopqrstuvwxyz';
+                    if (includeNumbers) charset += '0123456789';
+                    if (includeSymbols) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+                    
+                    let password = '';
+                    for (let i = 0; i < length; i++) {
+                        password += charset[Math.floor(Math.random() * charset.length)];
+                    }
+                    
+                    document.getElementById('passwordDisplay').textContent = password;
+                    document.getElementById('passwordResult').classList.remove('hidden');
+                }
+                function copyPassword() {
+                    const password = document.getElementById('passwordDisplay').textContent;
+                    if (password) {
+                        navigator.clipboard.writeText(password);
+                        showToast('Password copied to clipboard!');
+                    }
+                }
+
+                function rollDice() {
+                    const diceType = parseInt(document.getElementById('diceType').value);
+                    const roll = Math.floor(Math.random() * diceType) + 1;
+                    const display = document.getElementById('diceDisplay');
+                    display.innerHTML += `<div>Rolled D${diceType}: ${roll}</div>`;
+                }
+                function clearRolls() {
+                    document.getElementById('diceDisplay').innerHTML = '';
+                }
+
+                function generateRandomNumber() {
+                    const min = parseInt(document.getElementById('minValue').value) || 0;
+                    const max = parseInt(document.getElementById('maxValue').value) || 100;
+                    
+                    if (min >= max) {
+                        showToast('Minimum must be less than maximum', 'error');
+                        return;
+                    }
+                    
+                    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+                    document.getElementById('randomDisplay').textContent = randomNumber;
+                    document.getElementById('randomResult').classList.remove('hidden');
+                }
+
+                const quotes = [
+                    "The only way to do great work is to love what you do. - Steve Jobs",
+                    "Life is what happens when you're busy making other plans. - John Lennon",
+                    "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+                    "Success is not final, failure is not fatal: it is the courage to continue that counts. - Winston Churchill",
+                    "The greatest glory in living lies not in never falling, but in rising every time we fall. - Nelson Mandela"
+                ];
+                function generateQuote() {
+                    const randomIndex = Math.floor(Math.random() * quotes.length);
+                    document.getElementById('quoteDisplay').textContent = quotes[randomIndex];
+                }
+                function copyQuote() {
+                    const quote = document.getElementById('quoteDisplay').textContent;
+                    if (quote) {
+                        navigator.clipboard.writeText(quote);
+                        showToast('Quote copied to clipboard!');
+                    }
+                }
+
+                let flashcards = loadFromStorage('flashcards', []);
+                let currentFlashcardIndex = 0;
+                function loadFlashcards() {
+                    if (flashcards.length > 0) {
+                        showFlashcard(0);
+                    }
+                }
+                function addFlashcard() {
+                    const front = document.getElementById('flashcardFront').value.trim();
+                    const back = document.getElementById('flashcardBack').value.trim();
+                    
+                    if (!front || !back) {
+                        showToast('Please enter both front and back text', 'error');
+                        return;
+                    }
+                    
+                    flashcards.push({ front, back });
+                    saveToStorage('flashcards', flashcards);
+                    document.getElementById('flashcardFront').value = '';
+                    document.getElementById('flashcardBack').value = '';
+                    showToast('Flashcard added!');
+                    showFlashcard(flashcards.length - 1);
+                }
+                function showFlashcard(index) {
+                    if (flashcards.length === 0) return;
+                    currentFlashcardIndex = index;
+                    const card = flashcards[index];
+                    document.getElementById('flashcardDisplay').querySelector('.flashcard-front').textContent = card.front;
+                    document.getElementById('flashcardDisplay').querySelector('.flashcard-back').textContent = card.back;
+                    document.getElementById('flashcardDisplay').classList.remove('flipped');
+                }
+                function flipFlashcard() {
+                    document.getElementById('flashcardDisplay').classList.toggle('flipped');
+                }
+                function nextFlashcard() {
+                    if (flashcards.length === 0) return;
+                    currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcards.length;
+                    showFlashcard(currentFlashcardIndex);
+                }
+                function prevFlashcard() {
+                    if (flashcards.length === 0) return;
+                    currentFlashcardIndex = (currentFlashcardIndex - 1 + flashcards.length) % flashcards.length;
+                    showFlashcard(currentFlashcardIndex);
+                }
+                function deleteFlashcard() {
+                    if (flashcards.length === 0) return;
+                    flashcards.splice(currentFlashcardIndex, 1);
+                    saveToStorage('flashcards', flashcards);
+                    if (flashcards.length > 0) {
+                        currentFlashcardIndex = Math.min(currentFlashcardIndex, flashcards.length - 1);
+                        showFlashcard(currentFlashcardIndex);
+                    } else {
+                        document.getElementById('flashcardDisplay').querySelector('.flashcard-front').textContent = 'No flashcards';
+                    }
+                    showToast('Flashcard deleted!');
+                }
+
+                let notes = loadFromStorage('notes', []);
+                function loadNotes() {
+                    const container = document.getElementById('savedNotes');
+                    if (notes.length === 0) {
+                        container.innerHTML = '<p>No saved notes</p>';
+                        return;
+                    }
+                    container.innerHTML = notes.map((note, index) => 
+                        `<div class="mb-2"><strong>${note.title}</strong>: ${note.content.substring(0, 50)}...</div>`).join('');
+                }
+                function saveNote() {
+                    const title = document.getElementById('noteTitle').value.trim();
+                    const content = document.getElementById('noteContent').value.trim();
+                    
+                    if (!title || !content) {
+                        showToast('Please enter both title and content', 'error');
+                        return;
+                    }
+                    
+                    notes.push({ title, content, date: new Date().toISOString() });
+                    saveToStorage('notes', notes);
+                    loadNotes();
+                    showToast('Note saved!');
+                }
+                function clearNote() {
+                    document.getElementById('noteTitle').value = '';
+                    document.getElementById('noteContent').value = '';
+                }
+
+                function addMindMapNode() {
+                    const container = document.getElementById('mindmapContainer');
+                    const node = document.createElement('div');
+                    node.className = 'mindmap-node';
+                    node.style.left = Math.random() * 300 + 'px';
+                    node.style.top = Math.random() * 200 + 'px';
+                    node.contentEditable = true;
+                    node.textContent = 'New Node';
+                    container.appendChild(node);
+                }
+
+                async function lookupWord() {
+                    const word = document.getElementById('dictionaryWord').value.trim().toLowerCase();
+                    if (!word) {
+                        showToast('Please enter a word', 'error');
+                        return;
+                    }
+                    
+                    // Mock dictionary data
+                    const dictionary = {
+                        "hello": {
+                            word: "hello",
+                            phonetic: "/həˈloʊ/",
+                            meanings: [{
+                                partOfSpeech: "interjection",
+                                definitions: ["Used as a greeting or to begin a telephone conversation."]
+                            }]
+                        },
+                        "world": {
+                            word: "world",
+                            phonetic: "/wɜrld/",
+                            meanings: [{
+                                partOfSpeech: "noun",
+                                definitions: ["The earth, together with all of its countries and peoples."]
+                            }]
+                        }
+                    };
+                    
+                    const entry = dictionary[word];
+                    if (!entry) {
+                        document.getElementById('dictWord').textContent = word;
+                        document.getElementById('dictPhonetic').textContent = 'Not found';
+                        document.getElementById('dictMeanings').innerHTML = '<p>Word not found in dictionary</p>';
+                    } else {
+                        document.getElementById('dictWord').textContent = entry.word;
+                        document.getElementById('dictPhonetic').textContent = entry.phonetic;
+                        document.getElementById('dictMeanings').innerHTML = entry.meanings.map(meaning => `
+                            <div class="dictionary-meaning">
+                                <div class="dictionary-partOfSpeech">${meaning.partOfSpeech}</div>
+                                <div>${meaning.definitions.join('<br>')}</div>
+                            </div>
+                        `).join('');
+                    }
+                    
+                    document.getElementById('dictionaryResult').classList.remove('hidden');
+                }
+
+                function generateCitation() {
+                    const author = document.getElementById('citationAuthor').value.trim();
+                    const title = document.getElementById('citationTitle').value.trim();
+                    const year = document.getElementById('citationYear').value.trim();
+                    const style = document.getElementById('citationStyle').value;
+                    
+                    if (!author || !title || !year) {
+                        showToast('Please fill in all fields', 'error');
+                        return;
+                    }
+                    
+                    let citation = style === 'apa' 
+                        ? `${author}. (${year}). ${title}.` 
+                        : `${author}. ${title}. ${year}.`;
+                    
+                    document.getElementById('citationOutput').textContent = citation;
+                    document.getElementById('citationOutput').classList.remove('hidden');
+                }
+                function copyCitation() {
+                    const citation = document.getElementById('citationOutput').textContent;
+                    if (citation) {
+                        navigator.clipboard.writeText(citation);
+                        showToast('Citation copied to clipboard!');
+                    }
+                }
+
+                function initializeSettings() {
+                    document.getElementById('darkModeToggle').addEventListener('change', (e) => {
+                        const theme = e.target.checked ? 'dark' : 'light';
+                        document.documentElement.setAttribute('data-theme', theme);
+                        saveToStorage('theme', theme);
+                        state.theme = theme;
+                    });
+                }
+
+                function copyToClipboard(text) {
+                    navigator.clipboard.writeText(text);
+                    showToast('Copied to clipboard!');
+                }
+
+                function clearAllData() {
+                    if (confirm('Are you sure you want to clear all saved data?')) {
+                        localStorage.clear();
+                        location.reload();
+                    }
+                }
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    updateUI();
+                    
+                    document.getElementById('searchInput').addEventListener('input', (e) => {
+                        state.searchQuery = e.target.value;
+                        renderToolGrid();
+                    });
+                    
+                    document.querySelectorAll('.category-chip').forEach(chip => {
+                        chip.addEventListener('click', () => {
+                            document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+                            chip.classList.add('active');
+                            state.currentCategory = chip.dataset.category;
+                            renderToolGrid();
+                        });
+                    });
+                    
+                    document.querySelectorAll('.nav-item').forEach(item => {
+                        item.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            state.currentView = item.dataset.tab;
+                            renderToolGrid();
+                            updateBottomNav();
+                        });
+                    });
+                    
+                    document.getElementById('modalClose').addEventListener('click', closeModal);
+                    document.getElementById('modalOverlay').addEventListener('click', (e) => {
+                        if (e.target.id === 'modalOverlay') closeModal();
+                    });
+                    
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape' && state.currentTool) closeModal();
+                    });
+                });
+
+                // Global function assignments
+                window.openModal = openModal;
+                window.toggleFavorite = toggleFavorite;
+                window.addCountdown = addCountdown;
+                window.startCountdown = startCountdown;
+                window.addTodo = addTodo;
+                window.deleteTodo = deleteTodo;
+                window.startPomodoro = startPomodoro;
+                window.pausePomodoro = pausePomodoro;
+                window.resetPomodoro = resetPomodoro;
+                window.prevMonth = prevMonth;
+                window.nextMonth = nextMonth;
+                window.startStopwatch = startStopwatch;
+                window.stopStopwatch = stopStopwatch;
+                window.resetStopwatch = resetStopwatch;
+                window.recordLap = recordLap;
+                window.addHabit = addHabit;
+                window.toggleHabit = toggleHabit;
+                window.addGoal = addGoal;
+                window.calculateAge = calculateAge;
+                window.generateQRCode = generateQRCode;
+                window.downloadQRCode = downloadQRCode;
+                window.convertTextToQR = convertTextToQR;
+                window.downloadTextQR = downloadTextQR;
+                window.shortenUrl = shortenUrl;
+                window.resizeImage = resizeImage;
+                window.downloadResizedImage = downloadResizedImage;
+                window.generateMeme = generateMeme;
+                window.downloadMeme = downloadMeme;
+                window.convertImageFormat = convertImageFormat;
+                window.speakText = speakText;
+                window.stopSpeech = stopSpeech;
+                window.startRecording = startRecording;
+                window.stopRecording = stopRecording;
+                window.calculateBMI = calculateBMI;
+                window.resetBMI = resetBMI;
+                window.convertUnits = convertUnits;
+                window.swapUnits = swapUnits;
+                window.convertCurrency = convertCurrency;
+                window.swapCurrencies = swapCurrencies;
+                window.calculateLoan = calculateLoan;
+                window.generatePassword = generatePassword;
+                window.copyPassword = copyPassword;
+                window.rollDice = rollDice;
+                window.clearRolls = clearRolls;
+                window.generateRandomNumber = generateRandomNumber;
+                window.generateQuote = generateQuote;
+                window.copyQuote = copyQuote;
+                window.addFlashcard = addFlashcard;
+                window.flipFlashcard = flipFlashcard;
+                window.nextFlashcard = nextFlashcard;
+                window.prevFlashcard = prevFlashcard;
+                window.deleteFlashcard = deleteFlashcard;
+                window.saveNote = saveNote;
+                window.clearNote = clearNote;
+                window.addMindMapNode = addMindMapNode;
+                window.lookupWord = lookupWord;
+                window.generateCitation = generateCitation;
+                window.copyCitation = copyCitation;
+                window.copyToClipboard = copyToClipboard;
+                window.clearAllData = clearAllData;
+            </script>
+        </body>
+        </html>
